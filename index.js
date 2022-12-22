@@ -6,6 +6,11 @@ let html = ``;
 let NewSavings;
 let UpdateId;
 
+window.onbeforeunload = function(event)
+    {
+        return confirm("Confirm refresh");
+    };
+
 const AddBudget = () => {
     let GetBudget = document.querySelector("#inp-budget").value;
     if(GetBudget>0){
