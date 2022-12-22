@@ -47,7 +47,7 @@ function display(){
     NewSavings = budget - Expanses;
     document.querySelector("#savings").innerHTML = `${NewSavings}$`;
     document.querySelector("#expanses").innerHTML = `${Expanses}$`;
-    html = `<table class="table"><thead><tr><th scope="col">Expanse</th><th scope="col">Amount($)</th><th scope="col">Actions</th></tr></thead><tbody>${list}<tbody></table>`;
+    html = `<table id="my-table" class="table"><thead><tr><th scope="col">Expanse</th><th scope="col">Amount($)</th><th scope="col">Actions</th></tr></thead><tbody>${list}<tbody></table>`;
     document.querySelector("#list").innerHTML = html;
 }
 
@@ -72,15 +72,22 @@ function UpdateItem(){
 
 function generatePDF() {
     if(MainList.length>0){
-        var element = document.getElementById("pdf-content");
-        var opt = {
-            margin:       0,
-            filename:     'budget-manger.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  {scale: 2,windowWidth: 1024},
-            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
-        html2pdf().set(opt).from(element).save();
+        let axis = 60;
+        const doc = new jsPDF();
+        doc.setFontSize(22);
+        doc.text(`Budget-------->$${budget}`, 10, 10);
+        doc.text(`Expanses---->$${Expanses}`, 10, 20);
+        doc.text(`Savings------->$${NewSavings}`, 10, 30);
+        doc.setFontSize(18);
+        doc.text(`----------------------------`, 10, 40);
+        doc.text(`Details :`, 10, 50);
+        doc.setFontSize(16);
+        //loopin list
+        for(let i of MainList){
+            doc.text(`${i.name} --- $${i.amount}`,10,axis);
+            axis+=10;
+        }
+        doc.save("budget.pdf");
     }
     else{
         alert("Please add the expanses first to download.")
