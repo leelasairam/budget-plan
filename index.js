@@ -47,7 +47,7 @@ function display(){
     NewSavings = budget - Expanses;
     document.querySelector("#savings").innerHTML = `${NewSavings}$`;
     document.querySelector("#expanses").innerHTML = `${Expanses}$`;
-    html = `<table class="table"><thead><tr><th scope="col">Expanse</th><th scope="col">Amount</th><th scope="col">Actions</th></tr></thead><tbody>${list}<tbody></table>`;
+    html = `<table class="table"><thead><tr><th scope="col">Expanse</th><th scope="col">Amount($)</th><th scope="col">Actions</th></tr></thead><tbody>${list}<tbody></table>`;
     document.querySelector("#list").innerHTML = html;
 }
 
