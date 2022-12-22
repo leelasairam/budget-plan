@@ -1,3 +1,30 @@
 #card-2{
  margin-bottom:1rem
 }
+
+
+#name{
+    display: block;
+    width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+  @media screen and (min-width: 500px){
+    #name{
+        display: block;
+        width: 150px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+  }
+
+  #footer {
+    background: #6cf;
+    background-color:white;
+    padding:0.5rem;
+    border-radius:8px;
+    text-align:center
+}

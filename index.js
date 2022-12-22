@@ -1,10 +1,19 @@
-let budget;
+let budget=JSON.parse(localStorage.getItem('budget')) || 0;
 let Expanses = 0;
-let MainList=[];
+let MainList=JSON.parse(localStorage.getItem('expanses')) || [];
 let list = ``;
 let html = ``;
 let NewSavings;
 let UpdateId;
+
+function PageLoad(){
+    document.querySelector("#budget").innerHTML = `${budget}$`;
+    document.querySelector("#savings").innerHTML = `${budget}$`;
+    display()
+    document.querySelector("#inp-budget").value=budget;
+}
+
+window.onload=PageLoad();
 
 window.onbeforeunload = function(event)
     {
@@ -15,6 +24,7 @@ const AddBudget = () => {
     let GetBudget = document.querySelector("#inp-budget").value;
     if(GetBudget>0){
         budget=GetBudget;
+        localStorage.setItem('budget', JSON.stringify(budget));
         document.querySelector("#budget").innerHTML = `${budget}$`;
         document.querySelector("#savings").innerHTML = `${budget}$`;
     }
@@ -28,6 +38,7 @@ const AddExpense = () => {
     let amount = document.querySelector("#amount").value;
     if(name && amount && amount!=0 && budget){
         MainList.push({id:MainList.length+1,name:name,amount:amount});
+        localStorage.setItem('expanses', JSON.stringify(MainList));
         display();
         document.querySelector("#name").value="";
         document.querySelector("#amount").value=0;
@@ -42,7 +53,7 @@ function display(){
     Expanses = 0;
     for(let i of MainList){
         Expanses+=parseInt(i.amount);
-        list+=`<tr class="table-danger"> <td>${i.id}. &nbsp; ${i.name}</td> <td>${i.amount}</td> <td><button onclick="GetUpdateId(${i.id})" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-pencil-square"></i></button><button style="margin-left:0.3rem" onclick="DeteleItem(${i.id})"><i class="bi bi-trash3"></i></button></td> </tr>`;
+        list+=`<tr class="table"> <td id="name">${i.id}. ${i.name}</td> <td>${i.amount}</td> <td><a onclick="GetUpdateId(${i.id})" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-pencil-square"></i></a><a style="margin-left:0.3rem" onclick="DeteleItem(${i.id})"><i class="bi bi-trash3"></i></a></td> </tr>`;
     }
     NewSavings = budget - Expanses;
     document.querySelector("#savings").innerHTML = `${NewSavings}$`;
@@ -54,6 +65,7 @@ function display(){
 function DeteleItem(id){
     MainList.splice(id-1, 1);
     display();
+    localStorage.setItem('expanses', JSON.stringify(MainList));
 }
 
 function GetUpdateId(id){
@@ -68,6 +80,7 @@ function UpdateItem(){
     MainList[objIndex].name = document.querySelector("#updatename").value;
     MainList[objIndex].amount = document.querySelector("#updateamount").value;
     display();
+    localStorage.setItem('expanses', JSON.stringify(MainList));
 }
 
 function generatePDF() {
@@ -80,7 +93,7 @@ function generatePDF() {
         doc.text(`Savings------->$${NewSavings}`, 10, 30);
         doc.setFontSize(18);
         doc.text(`----------------------------`, 10, 40);
-        doc.text(`Details :`, 10, 50);
+        doc.text(`Expanses Details :`, 10, 50);
         doc.setFontSize(16);
         //loopin list
         for(let i of MainList){
@@ -91,5 +104,16 @@ function generatePDF() {
     }
     else{
         alert("Please add the expanses first to download.")
+    }
+}
+
+function ResetLocalStorage(){
+    if (confirm("Reset all Expanses and Budget?") == true) {
+        MainList=[];
+        budget=0;
+        display();
+        document.querySelector("#budget").innerHTML = budget;
+        localStorage.setItem('expanses', JSON.stringify(MainList));
+        localStorage.setItem('budget', JSON.stringify(budget));
     }
 }

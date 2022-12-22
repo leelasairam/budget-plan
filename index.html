@@ -81,6 +81,7 @@
                     <div class="card-body">
                         <h5 style="margin-bottom: 1rem;" class="card-title">Expanses Details</h5>
                         <button type="button" class="btn btn-secondary" onclick="generatePDF()" style="float: right;"><i class="bi bi-download"></i></button>
+                        <button type="button" class="btn btn-warning" onclick="ResetLocalStorage()" style="margin-right:0.3rem;float: right;" title="Refresh expenses and budget"><i class="bi bi-arrow-clockwise"></i></button>
                         <div id="list">
                             <p style="color: red;">No data as of now, follow below steps :</p>
                             <ol>
@@ -94,7 +95,7 @@
                 <br/>
             </div>
         </div>
-        <div style="float:bottom;background-color:whitesmoke;padding:0.5rem;border-radius:8px;text-align:center">
+        <div id="footer">
             &#169; Budget Manager, 2022 <br/> <a href="mailto:saikodavali49@gmail.com" style="text-decoration: none;font-weight:600">Contact</a>
           </div>
       </div>
