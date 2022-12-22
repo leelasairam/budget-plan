@@ -72,8 +72,15 @@ function UpdateItem(){
 
 function generatePDF() {
     if(MainList.length>0){
-        const element = document.getElementById('pdf-content');
-        html2pdf().from(element).save();
+        var element = document.getElementById("pdf-content");
+        var opt = {
+            margin:       0,
+            filename:     'budget-manger.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  {scale: 2,windowWidth: 1024},
+            jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
     }
     else{
         alert("Please add the expanses first to download.")
