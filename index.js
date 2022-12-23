@@ -21,7 +21,8 @@ const AddBudget = () => {
         budget=GetBudget;
         localStorage.setItem('budget', JSON.stringify(budget));
         document.querySelector("#budget").innerHTML = `${budget}$`;
-        document.querySelector("#savings").innerHTML = `${budget}$`;
+        //document.querySelector("#savings").innerHTML = `${budget}$`;
+        display();
     }
     else{
         alert("Budget cannot be null or 0")
